@@ -1,0 +1,180 @@
+/**
+ * @category    Solide Webservices
+ * @package     Flexslider
+ */
+
+/* Browser Resets */
+.sw-flexslider a:active, .sw-flexslider a:focus  { text-decoration: none; outline: none; }
+.sw-flexslider .slides, .sw-flexslider .sw-flexslider-control-nav, .sw-flexslider .sw-flexslider-direction-nav {
+	list-style: none !important;
+	margin: 0;
+	padding: 0;
+}
+
+/* Icon font */
+@font-face {
+    font-family: 'arrows';
+    src: url('arrows.eot');
+    src: url('arrows.eot?iefix') format('eot'),
+         url('arrows.woff') format('woff'),
+         url('arrows.ttf') format('truetype'),
+         url('arrows.svg#svgWebfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* FlexSlider Necessary Styles
+*********************************/ 
+.sw-flexslider .slides > li { 
+	display: none;
+	-webkit-backface-visibility: hidden; /* Hide the slides before the JS is loaded. Avoids image jumping */
+	margin: 0;
+	padding: 0;
+} 
+.sw-flexslider .slides img {
+	width: 100%;
+	display: block;
+}
+.sw-flexslider-pauseplay span { text-transform: capitalize;}
+
+/* Clearfix for the .slides element */
+.slides:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+} 
+html[xmlns] .slides { display: block; } 
+* html .slides { height: 1%; }
+
+/* No JavaScript Fallback */
+/* If you are not using another script, such as Modernizr, make sure you
+ * include js that eliminates this class on page load */
+.no-js .slides > li:first-child { display: block; }
+
+/* Flexslider theme */
+/*.sw-flexslider-element { margin-bottom: 20px; }*/
+.sw-flexslider-element:after {
+	display: block;
+	clear: both;
+	height: 0;
+	overflow: hidden;
+	content: ".";
+	font-size: 0;
+	line-height: 0;
+}
+.sw-flexslider {
+	position: relative;
+	display: block;
+	zoom: 1;
+}
+.sw-flexslider .slides {
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+.sw-flexslider .slides li {
+	position: relative;
+}
+.sw-flexslider .slides li img {
+	position: relative;
+	z-index: 8
+}
+.sw-flexslider .slides .slider-title {
+	position: absolute;
+	z-index: 8;
+}
+.sw-flexslider .slides .slider-title h2 {
+	font-size: 2.5em;
+	line-height: 1.1em;
+	font-weight: normal;
+	color: #fff;
+}
+
+/* direction nav */
+.sw-flexslider .sw-flexslider-direction-nav {*height: 0;}
+.sw-flexslider .sw-flexslider-direction-nav a {
+	position: absolute;
+	top: 50%;
+	display: block;
+	z-index: 10;
+	cursor: pointer;
+	font-size: 0 !important;
+	text-decoration: none !important;
+	margin: -20px 0 0; 
+}
+.sw-flexslider .sw-flexslider-direction-nav .sw-flexslider-prev:before,
+.sw-flexslider .sw-flexslider-direction-nav .sw-flexslider-next:before {
+	font-family: 'arrows';
+	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+	font-size: 20px;
+	text-decoration: none !important;
+	transition: all 200ms ease-in-out 0s;
+}
+.sw-flexslider:hover .sw-flexslider-direction-nav .sw-flexslider-prev:before,
+.sw-flexslider:hover .sw-flexslider-direction-nav .sw-flexslider-next:before {
+	font-size: 26px;
+}
+.sw-flexslider .sw-flexslider-direction-nav .sw-flexslider-disabled {
+	opacity: .3 !important;
+	filter: alpha(opacity=30);
+	cursor: default;
+}
+
+/* control paging */
+.sw-flexslider .sw-flexslider-control-paging {
+	position: absolute;
+	left: 45%;
+	text-align: center;
+	z-index: 99999;
+}
+.sw-flexslider .sw-flexslider-control-paging li { display: inline-block; }
+.sw-flexslider .sw-flexslider-control-paging li a {
+	display: block;
+	width: 8px;
+	height: 8px;
+	text-indent: -9999px;
+	cursor: pointer;
+	margin-right: 3px;
+	line-height: 1;
+}
+.sw-flexslider .sw-flexslider-control-paging li:last-child a { margin-right: 0; }
+
+/* carousel */
+.sw-flexslider .sw-flexslider-control-thumbs {
+	position: static;
+	width: 100%;
+	overflow: hidden;
+	margin-top: 2px;
+}
+.carousel li {
+    margin-right: 5px !important;
+}
+.carousel li img {
+    cursor: pointer !important;
+    display: block !important;
+    opacity: 0.9 !important;
+    width: 100% !important;
+}
+.carousel li img:hover {
+    opacity: 1 !important;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width : 480px) {
+	.sw-flexslider .slides .slider-title p { font-size: 0.8em !important; line-height: 160% !important; }
+	.sw-flexslider .slides .slider-title h2 { font-size: 1.2em !important; }
+	.sw-flexslider .slides .slider-title { padding: 2px !important };
+}
+
+@media only screen and (max-width: 860px) {
+	.sw-flexslider .sw-flexslider-control-paging .sw-flexslider-prev {
+		opacity: 1;
+		left: 0;
+	}
+	.sw-flexslider .sw-flexslider-control-paging .sw-flexslider-next {
+		opacity: 1;
+		right: 0;
+	}
+}

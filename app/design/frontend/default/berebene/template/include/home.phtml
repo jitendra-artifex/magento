@@ -1,0 +1,36 @@
+<div class="home-top">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_slider')->toHtml() ?>
+    <div class="static-block">
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_slider-sidebar_block')->toHtml() ?>
+    </div>
+    <div class="cls"></div>
+</div>
+<div class="home-page">
+    <div class="home-cat">
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_static_block')->toHtml() ?>
+    </div>
+    <div class="left-part">        
+        <?php echo $this->getLayout()->createBlock('catalog/product')->setTemplate('catalog/product/featured.phtml')->toHtml(); ?>        
+        <div class="about-bere">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_about_berebene')->toHtml() ?>
+        </div>
+    </div>
+    <div class="home-sidebar">
+        <div class="block">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_sidebar_block_1')->toHtml() ?>
+        </div>
+        <div class="block">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_sidebar_block_2')->toHtml() ?>         
+        </div> 
+        <div class="block">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_sidebar_block_3')->toHtml() ?>
+        </div>
+        <div class="block">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_sidebar_block_4')->toHtml() ?>
+        </div>
+        <div class="block">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home_sidebar_block_5')->toHtml() ?>
+        </div>
+   	</div>
+</div>
+<div class="cls"></div>

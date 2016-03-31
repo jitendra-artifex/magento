@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Morningtime Extensions
+* http://shop.morningtime.com
+*
+* @extension   Morningtime TargetPay iDEAL, Mister Cash, Directebanking, Wallie, Paysafecard
+* @type        Payment method
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Open Software License (OSL 3.0)
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/osl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@magentocommerce.com so we can send you a copy immediately.
+*
+* @category    Morningtime
+* @package     Morningtime_TargetPay
+* @copyright   Copyright (c) 2011-2012 Morningtime Internetbureau B.V. (http://www.morningtime.com)
+* @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+    <modules>
+        <Morningtime_TargetPay>
+            <version>1.7.0.0</version>
+        </Morningtime_TargetPay>
+    </modules>
+    <global>
+        <helpers>
+            <targetpay>
+                <class>Morningtime_TargetPay_Helper</class>
+            </targetpay>
+        </helpers>
+        <models>
+            <targetpay>
+                <class>Morningtime_TargetPay_Model</class>
+                <resourceModel>targetpay_mysql4</resourceModel>
+            </targetpay>
+            <targetpay_mysql4>
+                <class>Morningtime_TargetPay_Model_Mysql4</class>
+                <entities>
+                    <api_debug>
+                        <table>targetpay_api_debug</table>
+                    </api_debug>
+                </entities>
+            </targetpay_mysql4>
+        </models>
+        <resources>
+            <targetpay_setup>
+                <setup>
+                    <module>Morningtime_TargetPay</module>
+                    <class>Morningtime_TargetPay_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </targetpay_setup>
+            <targetpay_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </targetpay_write>
+            <targetpay_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </targetpay_read>
+        </resources>
+        <blocks>
+            <targetpay>
+                <class>Morningtime_TargetPay_Block</class>
+            </targetpay>
+        </blocks>
+    </global>
+    <frontend>
+        <events>
+            <sales_convert_quote_payment_to_order_payment>
+                <observers>
+                    <targetpay_observer>
+                        <type>singleton</type>
+                        <class>targetpay/observer</class>
+                        <method>convertPayment</method>
+                    </targetpay_observer>
+                </observers>
+            </sales_convert_quote_payment_to_order_payment>
+            <sales_model_service_quote_submit_after>
+                <observers>
+                    <targetpay_observer>
+                        <type>singleton</type>
+                        <class>targetpay/observer_submit</class>
+                        <method>sales_model_service_quote_submit_after</method>
+                    </targetpay_observer>
+                </observers>
+            </sales_model_service_quote_submit_after>
+        </events>
+        <secure_url>
+            <targetpay_api>/targetpay/api</targetpay_api>
+            <targetpay_push>/targetpay/push</targetpay_push>
+        </secure_url>
+        <routers>
+            <targetpay>
+                <use>standard</use>
+                <args>
+                    <module>Morningtime_TargetPay</module>
+                    <frontName>targetpay</frontName>
+                </args>
+            </targetpay>
+        </routers>
+        <translate>
+            <modules>
+                <Morningtime_TargetPay>
+                    <files>
+                        <default>Morningtime_TargetPay.csv</default>
+                    </files>
+                </Morningtime_TargetPay>
+            </modules>
+        </translate>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Morningtime_TargetPay>
+                    <files>
+                        <default>Morningtime_TargetPay.csv</default>
+                    </files>
+                </Morningtime_TargetPay>
+            </modules>
+        </translate>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <payment_services translate="title" module="payment">
+                                            <title>Payment Services</title>
+                                        </payment_services>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <payment>
+            <targetpay_ideal>
+                <model>targetpay/api_ideal</model>
+                <title>TargetPay - iDEAL</title>
+                <order_status>pending</order_status>
+                <processing_status>pending</processing_status>
+                <allowspecific>0</allowspecific>
+            </targetpay_ideal>
+            <targetpay_mrcash>
+                <model>targetpay/api_mrcash</model>
+                <title>TargetPay - Mister Cash</title>
+                <allowspecific>0</allowspecific>
+                <order_status>pending</order_status>
+                <processing_status>pending</processing_status>
+                <max_order_total>5000</max_order_total>
+            </targetpay_mrcash>
+            <targetpay_direct>
+                <model>targetpay/api_direct</model>
+                <title>TargetPay - DIRECTebanking</title>
+                <order_status>pending</order_status>
+                <processing_status>pending</processing_status>
+                <allowspecific>0</allowspecific>
+                <max_order_total>5000</max_order_total>
+            </targetpay_direct>
+            <targetpay_paysafecard>
+                <model>targetpay/api_paysafecard</model>
+                <title>TargetPay - paysafecard</title>
+                <order_status>pending</order_status>
+                <processing_status>pending</processing_status>
+                <allowspecific>0</allowspecific>
+                <max_order_total>150</max_order_total>
+            </targetpay_paysafecard>
+        </payment>
+        <payment_services>
+            <morningtime_targetpay>
+                <base_currency>1</base_currency>
+                <order_email>1</order_email>
+            </morningtime_targetpay>
+        </payment_services>
+    </default>
+</config>

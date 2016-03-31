@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>RocketWeb_All</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license>free/open source</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>This extension provides basic functionality for all other Rocket Web extensions</summary>
+    <description>This extension provides basic functionality for all other Rocket Web extensions</description>
+    <notes>Initial release</notes>
+    <authors><author><name>RocketWeb Inc.</name><user>auto-converted</user><email>dev@rocketweb.com</email></author></authors>
+    <date>2012-12-12</date>
+    <time>10:15:12</time>
+    <contents><target name="magecommunity"><dir name="RocketWeb"><dir name="All"><dir name="Helper"><file name="Data.php" hash="e6dbd2a24db3d4d7861ef1c147c1fa76"/></dir><dir name="Model"><file name="Feed.php" hash="8e6a50942b3d1e5837a5ea989b9ef490"/><file name="Observer.php" hash="f6a9c8853b162372d9ed6c6bf7e3f86c"/></dir><dir name="etc"><file name="adminhtml.xml" hash="4fd75eb093ed58499256b0104018d523"/><file name="config.xml" hash="f0f72a5904f611a6c8e6d9c6cb074a5b"/><file name="system.xml" hash="90913e8ae8134bbe09c0f0a6552ff395"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="RocketWeb_All.xml" hash="b1c635dc428097a7fca6c9a1da0b7e04"/></dir></target></contents>
+    <compatible/>
+    <dependencies/>
+</package>

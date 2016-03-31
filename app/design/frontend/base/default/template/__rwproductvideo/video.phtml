@@ -1,0 +1,87 @@
+<?php
+/**
+ * RocketWeb
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   RocketWeb
+ * @package    RocketWeb_ProductVideo
+ * @copyright  Copyright (c) 2011 RocketWeb (http://rocketweb.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     RocketWeb
+ */
+
+/**
+ * Product video data template
+ *
+ * @see RocketWeb_ProductVideo_Block_Media
+ */
+?>
+<?php
+$_product = $this->getProduct();
+$_helper = $this->helper('productvideo/data');
+$_productVideos = $this->_getProductVideos();
+?>
+<?php if($_productVideos && $_productVideos->count() > 0):?>
+	<div id="product-videos" class="video-views">
+	    <h3><?php echo $this->__('Product Videos') ?></h3>
+	    <ul>
+            <?php foreach($_productVideos as $video) : ?>  
+            <?php
+                $rw_code = $this->getCode($video);
+                $rw_title = $this->getTitle($video);
+                $rw_thumb_width = $this->getThumbWidth($video);
+                $rw_thumb_height = $this->getThumbHeight($video);
+                $rw_width = $this->getWidth($video);
+                $rw_height = $this->getHeight($video);
+                $rw_host = $this->getHost($video);
+                if($rw_host == 1){
+                    $link = "https://www.youtube.com/embed/$rw_code";
+                    $thumbnail = "http://img.youtube.com/vi/$rw_code/0.jpg";
+                    $rel = 'rel=0';
+                }
+                if($rw_host == 2){
+                    $link = "https://player.vimeo.com/video/".$rw_code."?badge=0";
+                    $thumbnail = $this->_getVimeoThumbnail($rw_code);
+                    $rel = '';
+                }
+            ?>
+                <li><a <?php echo $rel; ?> videoWidth="<?php echo $rw_width; ?>" videoHeight="<?php echo $rw_height; ?>" class="rw-product-video" title="<?php echo $this->htmlEscape($rw_title) ?>" href="<?php echo $link; ?>"><img width="<?php echo $rw_thumb_width?>" height="<?php echo $rw_thumb_height?>" src="<?php echo $thumbnail ?>" alt="<?php echo $this->htmlEscape($rw_title) ?>" /></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <?php if($_helper->getTinyBoxEnabled()): ?>
+     <script type="text/javascript">
+        var videoThumbs = $$('a.rw-product-video')
+        videoThumbs.each(function(el)
+        {
+            el.observe('click', function(event) {
+                var clickedThumb = event.findElement('a');
+
+                var videoWidth = clickedThumb.getAttribute('videoWidth');
+                var videoHeight = clickedThumb.getAttribute('videoHeight');
+
+                TINY.box.show(
+                        {
+                            iframe: clickedThumb.getAttribute('href'),
+                            width : videoWidth,
+                            height: videoHeight,
+                            close :  true,
+                            maskopacity: <?php echo $_helper->getOverlayOpacity()?>
+                        }
+                )
+                event.stop();
+            });
+
+        });
+    </script>
+    <?php endif; ?>
+           
+
+<?php endif;?>

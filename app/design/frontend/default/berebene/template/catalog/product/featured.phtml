@@ -1,0 +1,90 @@
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('slider/jquery.js')?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('slider/jquery-migrate-1.2.1.min.js')?>"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('slider/skin1.css')?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('slider/skin.css')?>">
+
+<script type="text/javascript">
+	jQuery.noConflict();
+	jQuery(document).ready(function() {
+    	jQuery('#mycarousel1').jcarousel();
+});
+</script>
+
+<?php /*?><link href="<?php echo $this->getSkinUrl('css/jquery.fancybox-1.3.4.css') ?>" rel="stylesheet" type="text/css" /><?php */?>
+
+<div class="wine-sugge">
+	<h2 class="title">Wijnsuggesties</h2>
+	<?php
+		$_helper = $this->helper('catalog/output');
+		$storeId = Mage::app()->getStore()->getId();
+		$catalog = $this->getLayout()->createBlock('catalog/product_list')->setStoreId($storeId);
+		$collection = Mage::getModel('catalog/product')->getCollection();
+		$collection->addAttributeToSelect('featured');
+		$collection->addFieldToFilter(array(
+			array('attribute' => 'featured', 'eq' => true),
+		));
+	?>
+	<?php if (!$collection->count()) : ?>
+		<p class="note-msg"><?php echo $this->__('There are no new products at the moment.') ?></p>
+	<?php else : ?>
+        <div class=" jcarousel-skin-tango row-fluid">
+            <div style="position: relative; display: block;" class="jcarousel-container jcarousel-container-horizontal row-fluid">
+                <div style="position: relative;overflow: hidden;" class="jcarousel-clip jcarousel-clip-horizontal row-fluid">
+                    <ul style="position: relative; top: 0px; margin: 0px; padding: 0px; left: -255px; width: 950px;" id="mycarousel1" class="jcarousel-listdata jcarousel-list-horizontal">
+					<?php
+						foreach ($collection as $_product) :
+							$_product = Mage::getModel('catalog/product')->setStoreId($storeId)->load($_product->getId());
+					?>
+	        			<li>
+	           				<div class="pro-detail">
+                            	<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->htmlEscape($_product->getName())?></a></h2>
+                  				<?php $brandname = Mage::getModel('catalog/product')->load($_product->getId())->getAttributeText('brand');?>
+                                <?php $madein = Mage::getModel('catalog/product')->load($_product->getId())->getAttributeText('made_in');?>
+                                <?php $bottle_size = Mage::getModel('catalog/product')->load($_product->getId())->getAttributeText('bottle_size');?>
+                                <div class="discripation"><?php echo $brandname; ?><br /> <?php echo $madein; ?><br /> <?php echo $bottle_size; ?> </div>
+                                <?php require('media_labels_listpage.phtml'); ?>
+                                <?php
+                    				$_coreHelper = $this->helper('core');
+									$regularprice = $_coreHelper->currency(number_format($_product->getPrice(),2),true,false);
+									$specialprice = $_coreHelper->currency(number_format($_product->getSpecialPrice(),2),true,false);		     		
+									$test=$_product->getSpecialPrice();
+								?>                 
+                  				<div class="price-box">                	
+                      				<?php if($test == '') { ?>
+                          				<span class="regular-price"><span class="price"><?php echo $regularprice; ?></span></span>	
+                      				<?php } else { ?>
+                                      	<span class="old-price"><span class="price"><?php echo $regularprice; ?></span></span>	
+                                      	<span class="special-price"><span class="price"><?php echo $specialprice; ?></span></span>
+                                  	<?php } ?>
+                              	</div>
+                                <?php $cartHelper = Mage::helper('checkout/cart')->getAddUrl($_product); ?>
+                                <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $cartHelper; ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                          	</div>
+                            <div class="product-image">
+                                <a href="<?php echo $_product->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(50, 212); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="pro-img" /></a>                                                
+                            </div>
+                       	</li>
+                  
+				  				<?php /*?><?php require('media_labels_listpage.phtml'); ?>							
+                  
+				  				<?php if (Mage::getStoreConfig('customadmin/general_options/cart')) : ?>                  	
+                      				<?php if ( !($_product->getTypeInstance(true)->hasRequiredOptions($_product) || $_product->isGrouped()) ) { ?>
+                          				<button type="button" class="ajax-cart2 add2cart btn-cart" data-url="<?php echo $this->getUrl(); ?>checkout/cart/add/uenc/aHR0cDovL3JpZ2h0YnJhaW5lcnMuZHluZG5zLmJpejo4MDgxL3Byb2plY3RzL21nX2VtcG9yaXVtL2NvZGUvaW5kZXgucGhwL21lbi5odG1s/product/<?php echo $_product->getId(); ?>/" data-id="<?php echo $_product->getId(); ?>"><?php echo $this->__('Add to Cart') ?></button>
+                      				<?php } else { ?>
+                          				<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->__('Add to Cart') ?>" class="add2cart"><?php echo $this->__('Add to Cart') ?></a>
+                      				<?php }  ?>                     
+                  				
+								<?php else: ?>
+                     				<a href="<?php echo $this->getAddToCartUrl($_product) ?>" title="<?php echo $this->__('Add to Cart') ?>" class="add2cart"><?php echo $this->__('Add to Cart') ?></a>
+                  				<?php endif; ?><?php */?>
+                                
+						<?php endforeach; ?>                       
+                        
+    				</ul>
+    			</div>
+    		</div>
+     	</div>
+    	<div class="cls"></div>
+	<?php endif ?>
+</div>
