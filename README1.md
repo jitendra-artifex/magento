@@ -1,2 +1,0 @@
-# magento
-Magento demo code 
